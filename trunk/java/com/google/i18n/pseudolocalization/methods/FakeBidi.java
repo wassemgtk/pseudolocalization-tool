@@ -51,6 +51,9 @@ public class FakeBidi extends DefaultVisitor implements PseudolocalizationMethod
   /** Pop direction formatting character. */
   private static final String PDF = "\u202c";
 
+  /** Pop direction formatting character. */
+  private static final String RLM = "\u200F";
+
   @Override
   public final void visitTextFragment(VisitorContext ctx, TextFragment textFragment) {
     String text = textFragment.getText();
@@ -63,7 +66,7 @@ public class FakeBidi extends DefaultVisitor implements PseudolocalizationMethod
       boolean needsWrap = (directionality == Character.DIRECTIONALITY_LEFT_TO_RIGHT);
       if (needsWrap != wrapping) {
         wrapping = needsWrap;
-        output.append(wrapping ? RLO : PDF);
+        output.append(wrapping ? (RLM + RLO) : (PDF + RLM));
       }
       output.appendCodePoint(codePoint);
     }
