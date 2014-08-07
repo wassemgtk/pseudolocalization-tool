@@ -104,6 +104,6 @@ public class PipelineTest extends PseudolocalizationTestCase {
     PseudolocalizationPipeline pipeline = PseudolocalizationPipeline.getVariantPipeline(true,
         "psbidi");
     String msg = runUnparsedHtml(pipeline);
-    assertEquals("\u202eHello\u202c <br> \u202ethere\u202c", msg);
+    assertEquals("\u200f\u202eHello\u202c\u200f <br> \u200f\u202ethere\u202c\u200f", msg);
   }
 }
