@@ -71,7 +71,7 @@ public class FakeBidi extends DefaultVisitor implements PseudolocalizationMethod
       output.appendCodePoint(codePoint);
     }
     if (wrapping) {
-      output.append(PDF);
+      output.append(PDF).append(RLM);
     }
     ctx.replaceFragment(textFragment, Arrays.<MessageFragment>asList(ctx.createTextFragment(
         output.toString())));

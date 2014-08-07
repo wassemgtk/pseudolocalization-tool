@@ -15,15 +15,16 @@
  */
 package com.google.i18n.pseudolocalization.methods;
 
+import java.text.Bidi;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.i18n.pseudolocalization.PseudolocalizationException;
 import com.google.i18n.pseudolocalization.PseudolocalizationPipeline;
 import com.google.i18n.pseudolocalization.PseudolocalizationTestCase;
 import com.google.i18n.pseudolocalization.message.MessageFragment;
 import com.google.i18n.pseudolocalization.message.SimpleNonlocalizableTextFragment;
 import com.google.i18n.pseudolocalization.message.SimpleTextFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Tests for {@link FakeBidi}.
@@ -44,6 +45,9 @@ public class FakeBidiTest extends PseudolocalizationTestCase {
   private void runTest(String input, String expected) throws PseudolocalizationException {
     String result = runPipeline(pipeline, input);
     assertEquals(expected, result);
+    Bidi bidi = new Bidi(result, Bidi.DIRECTION_DEFAULT_LEFT_TO_RIGHT);
+    assertEquals("Non-empty string not detected as RTL via first-strong: " + bidi.toString(),
+        input.isEmpty(), bidi.isLeftToRight());
   }
 
   private void runHtmlTest(String input, String expected) throws PseudolocalizationException {
@@ -51,6 +55,7 @@ public class FakeBidiTest extends PseudolocalizationTestCase {
         new SimpleTextFragment(input),
         new SimpleNonlocalizableTextFragment(HTML_END)); 
     assertEquals(HTML_START + expected + HTML_END, result);
+    // TODO(jat): figure out a way to detect how a browser would apply first-strong
   }
 
   public void testText() throws Exception {
