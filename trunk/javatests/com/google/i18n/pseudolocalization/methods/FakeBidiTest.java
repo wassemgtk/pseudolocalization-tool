@@ -55,16 +55,18 @@ public class FakeBidiTest extends PseudolocalizationTestCase {
 
   public void testText() throws Exception {
     runTest("", "");
-    runTest("a", "\u202ea\u202c");
+    runTest("a", "\u200f\u202ea\u202c\u200f");
     runTest("Chuck Norris peut diviser par zéro.",
-         "\u202eChuck\u202c \u202eNorris\u202c \u202epeut\u202c "
-         + "\u202ediviser\u202c \u202epar\u202c \u202ezéro\u202c.");
-    runTest("Hello 123 Goodbye!", "\u202eHello\u202c 123 \u202eGoodbye\u202c!");
+        "\u200f\u202eChuck\u202c\u200f \u200f\u202eNorris\u202c\u200f "
+        + "\u200f\u202epeut\u202c\u200f \u200f\u202ediviser\u202c\u200f "
+        + "\u200f\u202epar\u202c\u200f \u200f\u202ezéro\u202c\u200f.");
+    runTest("Hello 123 Goodbye!",
+        "\u200f\u202eHello\u202c\u200f 123 \u200f\u202eGoodbye\u202c\u200f!");
   }
 
   public void testHtml() throws Exception {
     runHtmlTest("", "");
-    runHtmlTest("Google", "\u202eGoogle\u202c");
+    runHtmlTest("Google", "\u200f\u202eGoogle\u202c\u200f");
 
     List<MessageFragment> fragments = new ArrayList<MessageFragment>();
     fragments.add(new SimpleNonlocalizableTextFragment("<a href=\"http://chucknorrisfacts.fr/\">"
@@ -75,8 +77,8 @@ public class FakeBidiTest extends PseudolocalizationTestCase {
     fragments.add(new SimpleNonlocalizableTextFragment("</a>"));
     String result = runPipeline(pipeline, fragments);
     assertEquals("<a href=\"http://chucknorrisfacts.fr/\">"
-         + "<strong>\u202eChuck\u202c \u202eNorris\u202c</strong> "
-         + "\u202epeut\u202c \u202ediviser\u202c \u202epar\u202c "
-         + "\u202ezéro\u202c.</a>", result);
+         + "<strong>\u200f\u202eChuck\u202c\u200f \u200f\u202eNorris\u202c\u200f</strong> "
+         + "\u200f\u202epeut\u202c\u200f \u200f\u202ediviser\u202c\u200f "
+         + "\u200f\u202epar\u202c\u200f \u200f\u202ezéro\u202c\u200f.</a>", result);
   }
 }
